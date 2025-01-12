@@ -1,0 +1,57 @@
+@font-face {
+  font-family: 'UrbanistRegular';
+  src: local('UrbanistRegular'), url(./fonts/Urbanist-Regular.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'UrbanistSemiBold';
+  src: local('UrbanistSemiBold'), url(./fonts/Urbanist-SemiBold.ttf) format('truetype');
+}
+@font-face {  
+  font-family: 'UrbanistMedium';
+  src: local('UrbanistMedium'), url(./fonts/Urbanist-Medium.ttf) format('truetype');
+}
+
+@font-face {  
+  font-family: 'UrbanistLight';
+  src: local('UrbanistLight'), url(./fonts/Urbanist-Light.ttf) format('truetype');
+}
+
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
