@@ -50,6 +50,7 @@ import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import Input from '@mui/material/Input';
 import OutlinedInput from '@mui/material/OutlinedInput';
 
+import {BASE_URL} from '../config/config';
 
 import {
     CollectionsBookmark,
@@ -128,7 +129,7 @@ const [image, setImage] = useState({ preview: '', data: '' });
     e.preventDefault();
     let formData = new FormData();
     formData.append('file', image.data);
-    const response = await fetch('http://localhost:5000/image', {
+    const response = await fetch(BASE_URL + 'image', {
       method: 'POST',
       body: formData,
     });
@@ -252,7 +253,7 @@ if (validateInputs()) {
 
 // send request here to backend - 
   let body = {'bid':myblog.id,'btitle':bTitle,'bByline':bByline, 'bSummary': bSummary,'btext':bText,'bCategory':bCategory,'bImage':bImage,'bYoutubeLink':bYoutubeLink,'bMp4Link':bMp4Link,'bLink':bLink,'bLinkText':bLinkText};
-const url = `http://localhost:5000/editBlogPost` ;
+const url = BASE_URL + `editBlogPost` ;
 let options = {
             method: 'POST',
             headers: {
@@ -411,7 +412,7 @@ Edit Blog post
   <div style={{marginLeft:20,}} >
       <h6>Choose an image to upload</h6>
       {image.preview && <img src={image.preview} width='100' height='100' />}
-      {<img src={'http://localhost:5000/uploads/'+bImage} width='100' height='100' />}
+      {<img src={BASE_URL + 'uploads/'+bImage} width='100' height='100' />}
       
       <form onSubmit={handleSubmit}>
         <input type='file' name='file' onChange={handleFileChange}></input>
@@ -421,7 +422,7 @@ Edit Blog post
     </div>
 
 
-<Box sx={{ display: 'flex',flexDirection:'row',height:'40vh',width:'90%', marginTop:2,justifyContent: 'flex-start',alignSelf: 'flex-start',marginBottom:2 }}>
+<Box sx={{ display: 'flex',flexDirection:'row',height:'80vh',width:'90%', marginTop:2,justifyContent: 'flex-start',alignSelf: 'flex-start',marginBottom:2 }}>
      <FormControl style={{marginLeft:20,marginRight:20}} >
 
  <FormLabel>Text</FormLabel>     
@@ -431,7 +432,7 @@ Edit Blog post
         value={bText}
         id="bText"
         init={{
-          height: 800,
+          height: '100%',
           width: 1000,
           menubar: true,
           plugins: "image code",
@@ -495,7 +496,7 @@ Edit Blog post
 
 
 
-<Button onClick={()=> { sendEditBlogRequest();console.log('dsfsdfs')}} sx={{marginRight:20,marginBottom:5,height:60,textTransform:'unset !important',marginTop:53,width:'20%',borderRadius:20,alignSelf:'flex-end'}} variant="contained" endIcon={<AppRegistrationIcon />}>
+<Button onClick={()=> { sendEditBlogRequest();console.log('dsfsdfs')}} sx={{marginRight:20,marginBottom:5,height:60,textTransform:'unset !important',marginTop:100,width:'20%',borderRadius:20,alignSelf:'flex-end'}} variant="contained" endIcon={<AppRegistrationIcon />}>
   Edit blog post
 </Button>
 

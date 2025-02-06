@@ -19,6 +19,7 @@ import AlertTitle from "@mui/material/AlertTitle";
 import Fade from "@mui/material/Fade";
 import CheckIcon from '@mui/icons-material/Check';
 
+import {BASE_URL}  from '../config/config';
 
 const BlogAdmin = ({route, navigation}) => {
 
@@ -41,7 +42,7 @@ useEffect(() => {
 
 async function fetchBlogs() {
 
-const url = `http://localhost:5000/fetchBlogs` ;
+const url = BASE_URL + `fetchBlogs` ;
 let options = {
             method: 'POST',
             headers: {
@@ -99,7 +100,7 @@ const columns = [
   {
     field: 'btitle',
     headerName: 'Title',
-    width: 150,
+    width: 300,
     editable: true,
   },
   {
@@ -117,7 +118,7 @@ const columns = [
     renderCell: (params) => {
         console.log('xxxx',params);
         return (
-           <Avatar sx={{borderRadius:0,justifyContent:'center',alignSelf:'center'}} src={'http://localhost:5000/uploads/'+params.value} />            
+           <Avatar sx={{borderRadius:0,justifyContent:'center',alignSelf:'center'}} src={BASE_URL + 'uploads/'+params.value} />            
         );
       },
     editable: false,

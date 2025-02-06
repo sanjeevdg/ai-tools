@@ -60,6 +60,8 @@ import {
     Work,
 } from "@mui/icons-material";
 
+import {BASE_URL} from '../config/config';
+
 const BlogPage = () => { 
   
  //  const dispatch = useDispatch();
@@ -125,7 +127,7 @@ const [image, setImage] = useState({ preview: '', data: '' });
     e.preventDefault();
     let formData = new FormData();
     formData.append('file', image.data);
-    const response = await fetch('http://localhost:5000/image', {
+    const response = await fetch(BASE_URL + 'image', {
       method: 'POST',
       body: formData,
     });
@@ -249,7 +251,7 @@ if (validateInputs()) {
 
 // send request here to backend - 
   let body = {'btitle':bTitle,'bByline':bByline, 'bSummary': bSummary,'btext':bText,'bCategory':bCategory,'bImage':bImage,'bYoutubeLink':bYoutubeLink,'bMp4Link':bMp4Link,'bLink':bLink,'bLinkText':bLinkText};
-const url = `http://localhost:5000/createBlogPost` ;
+const url = BASE_URL + `createBlogPost` ;
 let options = {
             method: 'POST',
             headers: {
@@ -417,7 +419,7 @@ Create new Blog post
     </div>
 
 
-<Box sx={{ display: 'flex',flexDirection:'row',height:'40vh',width:'90%', marginTop:2,justifyContent: 'flex-start',alignSelf: 'flex-start',marginBottom:2 }}>
+<Box sx={{ display: 'flex',flexDirection:'row',height:'80vh',width:'90%', marginTop:2,justifyContent: 'flex-start',alignSelf: 'flex-start',marginBottom:2 }}>
      <FormControl style={{marginLeft:20,marginRight:20}} >
 
  <FormLabel>Text</FormLabel>     
@@ -427,7 +429,7 @@ Create new Blog post
         value={bText}
         id="bText"
         init={{
-          height: 800,
+          height: '100%',
           width: 1000,
           menubar: true,
           plugins: "image code",
