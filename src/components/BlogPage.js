@@ -30,7 +30,7 @@ import Link from '@mui/material/Link';
 import Divider from '@mui/material/Divider';
 //import AppBar from '@mui/material/AppBar';
 
-
+import ReactCrop, { type Crop } from 'react-image-crop';
 
 import Typography from '@mui/material/Typography';
 
@@ -47,7 +47,7 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 //import {sendPasswordResetEmail} from 'firebase/auth'
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 
-
+import 'react-image-crop/dist/ReactCrop.css';
 
 
 import {
@@ -120,8 +120,11 @@ const [bLinkTextErrorMessage, setBLinkTextErrorMessage] = useState('');
 
 const [open,setOpen] = useState(false);
 
-
-const [image, setImage] = useState({ preview: '', data: '' });
+const [croppedImageUrl, setCroppedImageUrl] = useState(null);
+ const [crop, setCrop] = useState({ aspect: 16 / 9 });
+ const [src, setSrc] = useState(null);
+//{ preview: '', data: '' }
+const [image, setImage] = useState(null);
   const [status, setStatus] = useState('');
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -143,31 +146,18 @@ setBImage(res.fileName);
   }
 
   const handleFileChange = (e) => {
-    const img = {
-      preview: URL.createObjectURL(e.target.files[0]),
-      data: e.target.files[0],
-    }
-    setImage(img)
+    //const img = {
+    //  preview: URL.createObjectURL(e.target.files[0]),
+    //  data: e.target.files[0],
+  //  }
+    //URL.createObjectURL(
+    //e.target.files[0]
+    setSrc(URL.createObjectURL(e.target.files[0]));
   }
 
 
 
-/*
-const toggleDrawer = () => (event) =>  {
-         if (
-            event.type === "keydown" &&
-            (event.key === "Tab" || event.key === "Shift")
-        ) {
-            return;
-        }
  
-        setLeft(!left);
-    };
- */
-
-//<ListItemIcon sx={{alignItems:'center',alignSelf:'center'}} >
-  //</ListItemIcon>
-  
  const validateInputs = () => {
     const bTitle = document.getElementById('bTitle');
     const bText = document.getElementById('bText');
@@ -276,6 +266,46 @@ let options = {
 
 }
 
+const handleImageCrop = (newCrop) => {
+    setCrop(newCrop);
+  };
+
+  const onImageLoaded = (image) => {
+    // Reset crop to a valid default on image load
+    setCrop({
+      aspect: 1,
+      width: image.width / 2,
+      height: image.height / 2,
+      x: image.width / 4,
+      y: image.height / 4,
+    });
+  };
+
+  const handleCropComplete = (crop) => {
+    if (crop.width && crop.height) {
+      const canvas = document.createElement('canvas');
+      const image = new Image();
+      image.src = src;
+      image.onload = () => {
+        const ctx = canvas.getContext('2d');
+        canvas.width = crop.width;
+        canvas.height = crop.height;
+        ctx.drawImage(
+          image,
+          crop.x,
+          crop.y,
+          crop.width,
+          crop.height,
+          0,
+          0,
+          crop.width,
+          crop.height
+        );
+        const croppedUrl = canvas.toDataURL('image/png');
+        setCroppedImageUrl(croppedUrl);
+      };
+    }
+  };
 
 
 const openForgPassDlg = () => {
@@ -409,8 +439,30 @@ Create new Blog post
 
   <div style={{marginLeft:20,}} >
       <h6>Choose an image to upload</h6>
-      {image.preview && <img src={image.preview} width='100' height='100' />}
-      
+
+
+<div style={{width:'90%'}} >
+                    {src && (
+                        <div>
+                            <ReactCrop 
+                                src={src} 
+                                crop={crop} 
+                                onChange={handleImageCrop}
+                                onImageLoaded={onImageLoaded}
+                                onComplete={handleCropComplete} >
+
+                                <img src={src} />  
+
+                              </ReactCrop>
+                            <br />
+                            
+                            <br />
+                            <br />
+                        </div>
+                    )}
+                </div>
+                <div>{croppedImageUrl && <img src={croppedImageUrl} />}</div>
+
       <form onSubmit={handleSubmit}>
         <input type='file' name='file' onChange={handleFileChange}></input>
         <button type='submit'>Submit</button>
